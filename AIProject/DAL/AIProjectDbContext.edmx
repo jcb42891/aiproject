@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AIProjectDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="RequirementQuestion">
+          <Key>
+            <PropertyRef Name="RequirementQuestionID" />
+          </Key>
+          <Property Name="RequirementQuestionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Content" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="SystemUser">
+          <Key>
+            <PropertyRef Name="SystemUserID" />
+          </Key>
+          <Property Name="SystemUserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'AIProjectDB.dbo.SystemUserRequirementQuestion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="SystemUserRequirementQuestion">
+          <Key>
+            <PropertyRef Name="SystemUserID" />
+            <PropertyRef Name="RequirementQuestionID" />
+          </Key>
+          <Property Name="SystemUserID" Type="int" Nullable="false" />
+          <Property Name="RequirementQuestionID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_SystemUserRequirementQuestion_RequirementQuestion">
+          <End Role="RequirementQuestion" Type="Self.RequirementQuestion" Multiplicity="1" />
+          <End Role="SystemUserRequirementQuestion" Type="Self.SystemUserRequirementQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RequirementQuestion">
+              <PropertyRef Name="RequirementQuestionID" />
+            </Principal>
+            <Dependent Role="SystemUserRequirementQuestion">
+              <PropertyRef Name="RequirementQuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SystemUserRequirementQuestion_SystemUser">
+          <End Role="SystemUser" Type="Self.SystemUser" Multiplicity="1" />
+          <End Role="SystemUserRequirementQuestion" Type="Self.SystemUserRequirementQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUser">
+              <PropertyRef Name="SystemUserID" />
+            </Principal>
+            <Dependent Role="SystemUserRequirementQuestion">
+              <PropertyRef Name="SystemUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AIProjectDBModelStoreContainer">
+          <EntitySet Name="RequirementQuestion" EntityType="Self.RequirementQuestion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SystemUser" EntityType="Self.SystemUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SystemUserRequirementQuestion" EntityType="Self.SystemUserRequirementQuestion" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [SystemUserRequirementQuestion].[SystemUserID] AS [SystemUserID], 
+    [SystemUserRequirementQuestion].[RequirementQuestionID] AS [RequirementQuestionID]
+    FROM [dbo].[SystemUserRequirementQuestion] AS [SystemUserRequirementQuestion]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_SystemUserRequirementQuestion_RequirementQuestion" Association="Self.FK_SystemUserRequirementQuestion_RequirementQuestion">
+            <End Role="RequirementQuestion" EntitySet="RequirementQuestion" />
+            <End Role="SystemUserRequirementQuestion" EntitySet="SystemUserRequirementQuestion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SystemUserRequirementQuestion_SystemUser" Association="Self.FK_SystemUserRequirementQuestion_SystemUser">
+            <End Role="SystemUser" EntitySet="SystemUser" />
+            <End Role="SystemUserRequirementQuestion" EntitySet="SystemUserRequirementQuestion" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AIProjectDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="RequirementQuestion">
+          <Key>
+            <PropertyRef Name="RequirementQuestionID" />
+          </Key>
+          <Property Name="RequirementQuestionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SystemUsers" Relationship="Self.SystemUserRequirementQuestion" FromRole="RequirementQuestion" ToRole="SystemUser" />
+        </EntityType>
+        <EntityType Name="SystemUser">
+          <Key>
+            <PropertyRef Name="SystemUserID" />
+          </Key>
+          <Property Name="SystemUserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="RequirementQuestions" Relationship="Self.SystemUserRequirementQuestion" FromRole="SystemUser" ToRole="RequirementQuestion" />
+        </EntityType>
+        <Association Name="SystemUserRequirementQuestion">
+          <End Role="RequirementQuestion" Type="Self.RequirementQuestion" Multiplicity="*" />
+          <End Role="SystemUser" Type="Self.SystemUser" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="RequirementQuestions" EntityType="Self.RequirementQuestion" />
+          <EntitySet Name="SystemUsers" EntityType="Self.SystemUser" />
+          <AssociationSet Name="SystemUserRequirementQuestion" Association="Self.SystemUserRequirementQuestion">
+            <End Role="RequirementQuestion" EntitySet="RequirementQuestions" />
+            <End Role="SystemUser" EntitySet="SystemUsers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AIProjectDBModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="RequirementQuestions">
+            <EntityTypeMapping TypeName="AIProjectDBModel.RequirementQuestion">
+              <MappingFragment StoreEntitySet="RequirementQuestion">
+                <ScalarProperty Name="RequirementQuestionID" ColumnName="RequirementQuestionID" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SystemUsers">
+            <EntityTypeMapping TypeName="AIProjectDBModel.SystemUser">
+              <MappingFragment StoreEntitySet="SystemUser">
+                <ScalarProperty Name="SystemUserID" ColumnName="SystemUserID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="SystemUserRequirementQuestion" TypeName="AIProjectDBModel.SystemUserRequirementQuestion" StoreEntitySet="SystemUserRequirementQuestion">
+            <EndProperty Name="RequirementQuestion">
+              <ScalarProperty Name="RequirementQuestionID" ColumnName="RequirementQuestionID" />
+            </EndProperty>
+            <EndProperty Name="SystemUser">
+              <ScalarProperty Name="SystemUserID" ColumnName="SystemUserID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

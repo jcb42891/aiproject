@@ -1,0 +1,27 @@
+﻿@model AIProject.DAL.SystemUser
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.title = "Create Account";
+}
+
+<h1>Create Account</h1>
+
+@using (Html.BeginForm("Create", "Login", FormMethod.Post))
+{
+
+    <table>
+        <tr>
+            <td>Username: </td>
+            <td>@Html.TextBoxFor(m => m.Username)</td>
+        </tr>
+        <tr>
+            <td>Password: </td>
+            <td>@Html.TextBoxFor(m => m.Password)</td>
+        </tr>
+    </table>
+
+    <input class=""btn btn-primary btn-success" type="submit" value="Sign up" />
+}
+
+

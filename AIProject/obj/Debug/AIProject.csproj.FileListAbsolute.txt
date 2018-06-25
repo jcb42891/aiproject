@@ -89,3 +89,13 @@ C:\Users\Developer\source\repos\AIProject\AIProject\obj\Debug\AIProject.csproj.C
 C:\Users\Developer\source\repos\AIProject\AIProject\obj\Debug\AIProject.csproj.CopyComplete
 C:\Users\Developer\source\repos\AIProject\AIProject\obj\Debug\AIProject.dll
 C:\Users\Developer\source\repos\AIProject\AIProject\obj\Debug\AIProject.pdb
+C:\Users\Developer\source\repos\AIProject\AIProject\bin\EntityFramework.dll
+C:\Users\Developer\source\repos\AIProject\AIProject\bin\EntityFramework.SqlServer.dll
+C:\Users\Developer\source\repos\AIProject\AIProject\bin\EntityFramework.xml
+C:\Users\Developer\source\repos\AIProject\AIProject\bin\EntityFramework.SqlServer.xml
+C:\Users\Developer\source\repos\AIProject\AIProject\bin\System.Net.Http.Formatting.dll
+C:\Users\Developer\source\repos\AIProject\AIProject\bin\System.Web.Http.dll
+C:\Users\Developer\source\repos\AIProject\AIProject\bin\System.Web.Http.WebHost.dll
+C:\Users\Developer\source\repos\AIProject\AIProject\bin\System.Net.Http.Formatting.xml
+C:\Users\Developer\source\repos\AIProject\AIProject\bin\System.Web.Http.xml
+C:\Users\Developer\source\repos\AIProject\AIProject\bin\System.Web.Http.WebHost.xml

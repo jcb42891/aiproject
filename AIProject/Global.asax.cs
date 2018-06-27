@@ -7,6 +7,8 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using AIProject.DAL;
 using System.Data.Entity;
+using AIProject.Classes;
+using System.Data;
 
 namespace AIProject
 {
@@ -17,7 +19,27 @@ namespace AIProject
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);            
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
+            
+            ///  ** CODE FOR IMPORTING THE MATRIX **
+            //DataTable AIMatrix_CSV =  Utility.csvToDataTable(@"C:\Source\aiproject\aimatrix.csv");
+
+            //var context = new AIProjectDBEntities();
+
+            //foreach (DataRow row in AIMatrix_CSV.Rows)
+            //{
+            //    AIMatrix matrix = AIMatrixMapper.mapMatrixRow(row);
+            //    context.AIMatrix.Add(matrix);
+            //}
+            //try
+            //{
+            //    context.SaveChanges();
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw ex;
+            //}
+            
 
         }
     }

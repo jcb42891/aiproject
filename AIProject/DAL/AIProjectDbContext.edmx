@@ -5,6 +5,40 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="AIProjectDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AIMatrix">
+          <Key>
+            <PropertyRef Name="AIMatrixElementID" />
+          </Key>
+          <Property Name="AIMatrixElementID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Insurer" Type="nvarchar" MaxLength="100" />
+          <Property Name="PolicyType" Type="nvarchar" MaxLength="10" />
+          <Property Name="FormNumber" Type="nvarchar" MaxLength="20" />
+          <Property Name="FormEditionDate" Type="nvarchar" MaxLength="25" />
+          <Property Name="FormIsUnacceptable" Type="bit" />
+          <Property Name="WhoIsFormDesignedFor" Type="nvarchar" MaxLength="100" />
+          <Property Name="FormTitle" Type="nvarchar" MaxLength="200" />
+          <Property Name="BIandPD" Type="bit" />
+          <Property Name="PIandAI" Type="bit" />
+          <Property Name="PrivityOfContractReqd" Type="bit" />
+          <Property Name="LimitsLessLang" Type="bit" />
+          <Property Name="FormHasSchedule" Type="bit" />
+          <Property Name="PremAndOps" Type="bit" />
+          <Property Name="ProdCompOps" Type="bit" />
+          <Property Name="UnacceptableStdLang" Type="nvarchar(max)" />
+          <Property Name="CommentsStdLang" Type="nvarchar(max)" />
+          <Property Name="SpfcActsOrOmissionsLang" Type="bit" />
+          <Property Name="SpfcThoseActingBehalfLang" Type="bit" />
+          <Property Name="RequiresContractExec" Type="bit" />
+          <Property Name="SpfcOnlyCoversWorkSubjContractLang" Type="bit" />
+          <Property Name="SpfcAIRequiredLang" Type="bit" />
+          <Property Name="SpfcNoDutyToDefendLang" Type="bit" />
+          <Property Name="UnacceptableAdvLang" Type="nvarchar(max)" />
+          <Property Name="CommentsAdvLang" Type="nvarchar(max)" />
+          <Property Name="PrimaryLang" Type="bit" />
+          <Property Name="NonContributoryLang" Type="bit" />
+          <Property Name="WaiverOfSubroLang" Type="bit" />
+          <Property Name="AgentUnacceptableLang" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="RequirementQuestion">
           <Key>
             <PropertyRef Name="RequirementQuestionID" />
@@ -57,6 +91,7 @@
           <Parameter Name="a_Password" Type="nvarchar" Mode="In" />
         </Function>
         <EntityContainer Name="AIProjectDBModelStoreContainer">
+          <EntitySet Name="AIMatrix" EntityType="Self.AIMatrix" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RequirementQuestion" EntityType="Self.RequirementQuestion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SystemUser" EntityType="Self.SystemUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SystemUserRequirementQuestion" EntityType="Self.SystemUserRequirementQuestion" Schema="dbo" store:Type="Tables" />
@@ -73,21 +108,18 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AIProjectDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="AIProjectDBEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="SystemUserCheckLogin" EntitySet="SystemUser" ReturnType="Collection(AIProjectDBModel.SystemUser)">
+            <Parameter Name="a_Username" Mode="In" Type="String" />
+            <Parameter Name="a_Password" Mode="In" Type="String" />
+          </FunctionImport>
           <EntitySet Name="RequirementQuestion" EntityType="AIProjectDBModel.RequirementQuestion" />
           <EntitySet Name="SystemUser" EntityType="AIProjectDBModel.SystemUser" />
           <AssociationSet Name="SystemUserRequirementQuestion" Association="AIProjectDBModel.SystemUserRequirementQuestion">
             <End Role="RequirementQuestion" EntitySet="RequirementQuestion" />
             <End Role="SystemUser" EntitySet="SystemUser" />
           </AssociationSet>
-          <FunctionImport Name="SystemUser_CheckLogin" ReturnType="Collection(AIProjectDBModel.SystemUser_CheckLogin_Result)">
-            <Parameter Name="a_Username" Mode="In" Type="String" />
-            <Parameter Name="a_Password" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SystemUserCheckLogin" EntitySet="SystemUser" ReturnType="Collection(AIProjectDBModel.SystemUser)">
-            <Parameter Name="a_Username" Mode="In" Type="String" />
-            <Parameter Name="a_Password" Mode="In" Type="String" />
-          </FunctionImport>
+          <EntitySet Name="AIMatrix" EntityType="AIProjectDBModel.AIMatrix" />
         </EntityContainer>
         <EntityType Name="RequirementQuestion">
           <Key>
@@ -110,17 +142,47 @@
           <End Type="AIProjectDBModel.RequirementQuestion" Role="RequirementQuestion" Multiplicity="*" />
           <End Type="AIProjectDBModel.SystemUser" Role="SystemUser" Multiplicity="*" />
         </Association>
-        <ComplexType Name="SystemUser_CheckLogin_Result">
-          <Property Type="Int32" Name="SystemUserID" Nullable="false" />
-          <Property Type="String" Name="Username" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Password" Nullable="true" MaxLength="50" />
-        </ComplexType>
+        <EntityType Name="AIMatrix">
+          <Key>
+            <PropertyRef Name="AIMatrixElementID" />
+          </Key>
+          <Property Name="AIMatrixElementID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Insurer" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PolicyType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="FormNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="FormEditionDate" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="FormIsUnacceptable" Type="Boolean" />
+          <Property Name="WhoIsFormDesignedFor" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="FormTitle" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="BIandPD" Type="Boolean" />
+          <Property Name="PIandAI" Type="Boolean" />
+          <Property Name="PrivityOfContractReqd" Type="Boolean" />
+          <Property Name="LimitsLessLang" Type="Boolean" />
+          <Property Name="FormHasSchedule" Type="Boolean" />
+          <Property Name="PremAndOps" Type="Boolean" />
+          <Property Name="ProdCompOps" Type="Boolean" />
+          <Property Name="UnacceptableStdLang" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CommentsStdLang" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SpfcActsOrOmissionsLang" Type="Boolean" />
+          <Property Name="SpfcThoseActingBehalfLang" Type="Boolean" />
+          <Property Name="RequiresContractExec" Type="Boolean" />
+          <Property Name="SpfcOnlyCoversWorkSubjContractLang" Type="Boolean" />
+          <Property Name="SpfcAIRequiredLang" Type="Boolean" />
+          <Property Name="SpfcNoDutyToDefendLang" Type="Boolean" />
+          <Property Name="UnacceptableAdvLang" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CommentsAdvLang" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PrimaryLang" Type="Boolean" />
+          <Property Name="NonContributoryLang" Type="Boolean" />
+          <Property Name="WaiverOfSubroLang" Type="Boolean" />
+          <Property Name="AgentUnacceptableLang" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="AIProjectDBModelStoreContainer" CdmEntityContainer="Entities">
+  <EntityContainerMapping StorageEntityContainer="AIProjectDBModelStoreContainer" CdmEntityContainer="AIProjectDBEntities">
+          <FunctionImportMapping FunctionImportName="SystemUserCheckLogin" FunctionName="AIProjectDBModel.Store.SystemUser_CheckLogin" />
           <EntitySetMapping Name="RequirementQuestion">
             <EntityTypeMapping TypeName="AIProjectDBModel.RequirementQuestion">
               <MappingFragment StoreEntitySet="RequirementQuestion">
@@ -146,17 +208,42 @@
               <ScalarProperty Name="RequirementQuestionID" ColumnName="RequirementQuestions_RequirementQuestionID" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="SystemUser_CheckLogin" FunctionName="AIProjectDBModel.Store.SystemUser_CheckLogin">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="AIProjectDBModel.SystemUser_CheckLogin_Result">
-                <ScalarProperty Name="SystemUserID" ColumnName="SystemUserID" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SystemUserCheckLogin" FunctionName="AIProjectDBModel.Store.SystemUser_CheckLogin" />
-        </EntityContainerMapping>
+          <EntitySetMapping Name="AIMatrix">
+            <EntityTypeMapping TypeName="AIProjectDBModel.AIMatrix">
+              <MappingFragment StoreEntitySet="AIMatrix">
+                <ScalarProperty Name="AgentUnacceptableLang" ColumnName="AgentUnacceptableLang" />
+                <ScalarProperty Name="WaiverOfSubroLang" ColumnName="WaiverOfSubroLang" />
+                <ScalarProperty Name="NonContributoryLang" ColumnName="NonContributoryLang" />
+                <ScalarProperty Name="PrimaryLang" ColumnName="PrimaryLang" />
+                <ScalarProperty Name="CommentsAdvLang" ColumnName="CommentsAdvLang" />
+                <ScalarProperty Name="UnacceptableAdvLang" ColumnName="UnacceptableAdvLang" />
+                <ScalarProperty Name="SpfcNoDutyToDefendLang" ColumnName="SpfcNoDutyToDefendLang" />
+                <ScalarProperty Name="SpfcAIRequiredLang" ColumnName="SpfcAIRequiredLang" />
+                <ScalarProperty Name="SpfcOnlyCoversWorkSubjContractLang" ColumnName="SpfcOnlyCoversWorkSubjContractLang" />
+                <ScalarProperty Name="RequiresContractExec" ColumnName="RequiresContractExec" />
+                <ScalarProperty Name="SpfcThoseActingBehalfLang" ColumnName="SpfcThoseActingBehalfLang" />
+                <ScalarProperty Name="SpfcActsOrOmissionsLang" ColumnName="SpfcActsOrOmissionsLang" />
+                <ScalarProperty Name="CommentsStdLang" ColumnName="CommentsStdLang" />
+                <ScalarProperty Name="UnacceptableStdLang" ColumnName="UnacceptableStdLang" />
+                <ScalarProperty Name="ProdCompOps" ColumnName="ProdCompOps" />
+                <ScalarProperty Name="PremAndOps" ColumnName="PremAndOps" />
+                <ScalarProperty Name="FormHasSchedule" ColumnName="FormHasSchedule" />
+                <ScalarProperty Name="LimitsLessLang" ColumnName="LimitsLessLang" />
+                <ScalarProperty Name="PrivityOfContractReqd" ColumnName="PrivityOfContractReqd" />
+                <ScalarProperty Name="PIandAI" ColumnName="PIandAI" />
+                <ScalarProperty Name="BIandPD" ColumnName="BIandPD" />
+                <ScalarProperty Name="FormTitle" ColumnName="FormTitle" />
+                <ScalarProperty Name="WhoIsFormDesignedFor" ColumnName="WhoIsFormDesignedFor" />
+                <ScalarProperty Name="FormIsUnacceptable" ColumnName="FormIsUnacceptable" />
+                <ScalarProperty Name="FormEditionDate" ColumnName="FormEditionDate" />
+                <ScalarProperty Name="FormNumber" ColumnName="FormNumber" />
+                <ScalarProperty Name="PolicyType" ColumnName="PolicyType" />
+                <ScalarProperty Name="Insurer" ColumnName="Insurer" />
+                <ScalarProperty Name="AIMatrixElementID" ColumnName="AIMatrixElementID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->

@@ -1,20 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="AIProjectDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="AIProjectDBEntities" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="SystemUserCheckLogin" EntitySet="SystemUser" ReturnType="Collection(AIProjectDBModel.SystemUser)">
+      <Parameter Name="a_Username" Mode="In" Type="String" />
+      <Parameter Name="a_Password" Mode="In" Type="String" />
+    </FunctionImport>
     <EntitySet Name="RequirementQuestion" EntityType="AIProjectDBModel.RequirementQuestion" />
     <EntitySet Name="SystemUser" EntityType="AIProjectDBModel.SystemUser" />
     <AssociationSet Name="SystemUserRequirementQuestion" Association="AIProjectDBModel.SystemUserRequirementQuestion">
       <End Role="RequirementQuestion" EntitySet="RequirementQuestion" />
       <End Role="SystemUser" EntitySet="SystemUser" />
     </AssociationSet>
-    <FunctionImport Name="SystemUser_CheckLogin" ReturnType="Collection(AIProjectDBModel.SystemUser_CheckLogin_Result)">
-      <Parameter Name="a_Username" Mode="In" Type="String" />
-      <Parameter Name="a_Password" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="SystemUserCheckLogin" EntitySet="SystemUser" ReturnType="Collection(AIProjectDBModel.SystemUser)">
-      <Parameter Name="a_Username" Mode="In" Type="String" />
-      <Parameter Name="a_Password" Mode="In" Type="String" />
-    </FunctionImport>
+    <EntitySet Name="AIMatrix" EntityType="AIProjectDBModel.AIMatrix" />
   </EntityContainer>
   <EntityType Name="RequirementQuestion">
     <Key>
@@ -37,9 +34,38 @@
     <End Type="AIProjectDBModel.RequirementQuestion" Role="RequirementQuestion" Multiplicity="*" />
     <End Type="AIProjectDBModel.SystemUser" Role="SystemUser" Multiplicity="*" />
   </Association>
-  <ComplexType Name="SystemUser_CheckLogin_Result">
-    <Property Type="Int32" Name="SystemUserID" Nullable="false" />
-    <Property Type="String" Name="Username" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="Password" Nullable="true" MaxLength="50" />
-  </ComplexType>
+  <EntityType Name="AIMatrix">
+    <Key>
+      <PropertyRef Name="AIMatrixElementID" />
+    </Key>
+    <Property Name="AIMatrixElementID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Insurer" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="PolicyType" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="FormNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="FormEditionDate" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+    <Property Name="FormIsUnacceptable" Type="Boolean" />
+    <Property Name="WhoIsFormDesignedFor" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="FormTitle" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="BIandPD" Type="Boolean" />
+    <Property Name="PIandAI" Type="Boolean" />
+    <Property Name="PrivityOfContractReqd" Type="Boolean" />
+    <Property Name="LimitsLessLang" Type="Boolean" />
+    <Property Name="FormHasSchedule" Type="Boolean" />
+    <Property Name="PremAndOps" Type="Boolean" />
+    <Property Name="ProdCompOps" Type="Boolean" />
+    <Property Name="UnacceptableStdLang" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CommentsStdLang" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SpfcActsOrOmissionsLang" Type="Boolean" />
+    <Property Name="SpfcThoseActingBehalfLang" Type="Boolean" />
+    <Property Name="RequiresContractExec" Type="Boolean" />
+    <Property Name="SpfcOnlyCoversWorkSubjContractLang" Type="Boolean" />
+    <Property Name="SpfcAIRequiredLang" Type="Boolean" />
+    <Property Name="SpfcNoDutyToDefendLang" Type="Boolean" />
+    <Property Name="UnacceptableAdvLang" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CommentsAdvLang" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PrimaryLang" Type="Boolean" />
+    <Property Name="NonContributoryLang" Type="Boolean" />
+    <Property Name="WaiverOfSubroLang" Type="Boolean" />
+    <Property Name="AgentUnacceptableLang" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
 </Schema>

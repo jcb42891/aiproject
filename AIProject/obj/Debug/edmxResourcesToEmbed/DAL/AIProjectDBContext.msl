@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="AIProjectDBModelStoreContainer" CdmEntityContainer="Entities">
+  <EntityContainerMapping StorageEntityContainer="AIProjectDBModelStoreContainer" CdmEntityContainer="AIProjectDBEntities">
+    <FunctionImportMapping FunctionImportName="SystemUserCheckLogin" FunctionName="AIProjectDBModel.Store.SystemUser_CheckLogin" />
     <EntitySetMapping Name="RequirementQuestion">
       <EntityTypeMapping TypeName="AIProjectDBModel.RequirementQuestion">
         <MappingFragment StoreEntitySet="RequirementQuestion">
@@ -26,15 +27,40 @@
         <ScalarProperty Name="RequirementQuestionID" ColumnName="RequirementQuestions_RequirementQuestionID" />
       </EndProperty>
     </AssociationSetMapping>
-    <FunctionImportMapping FunctionImportName="SystemUser_CheckLogin" FunctionName="AIProjectDBModel.Store.SystemUser_CheckLogin">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="AIProjectDBModel.SystemUser_CheckLogin_Result">
-          <ScalarProperty Name="SystemUserID" ColumnName="SystemUserID" />
-          <ScalarProperty Name="Username" ColumnName="Username" />
-          <ScalarProperty Name="Password" ColumnName="Password" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="SystemUserCheckLogin" FunctionName="AIProjectDBModel.Store.SystemUser_CheckLogin" />
+    <EntitySetMapping Name="AIMatrix">
+      <EntityTypeMapping TypeName="AIProjectDBModel.AIMatrix">
+        <MappingFragment StoreEntitySet="AIMatrix">
+          <ScalarProperty Name="AgentUnacceptableLang" ColumnName="AgentUnacceptableLang" />
+          <ScalarProperty Name="WaiverOfSubroLang" ColumnName="WaiverOfSubroLang" />
+          <ScalarProperty Name="NonContributoryLang" ColumnName="NonContributoryLang" />
+          <ScalarProperty Name="PrimaryLang" ColumnName="PrimaryLang" />
+          <ScalarProperty Name="CommentsAdvLang" ColumnName="CommentsAdvLang" />
+          <ScalarProperty Name="UnacceptableAdvLang" ColumnName="UnacceptableAdvLang" />
+          <ScalarProperty Name="SpfcNoDutyToDefendLang" ColumnName="SpfcNoDutyToDefendLang" />
+          <ScalarProperty Name="SpfcAIRequiredLang" ColumnName="SpfcAIRequiredLang" />
+          <ScalarProperty Name="SpfcOnlyCoversWorkSubjContractLang" ColumnName="SpfcOnlyCoversWorkSubjContractLang" />
+          <ScalarProperty Name="RequiresContractExec" ColumnName="RequiresContractExec" />
+          <ScalarProperty Name="SpfcThoseActingBehalfLang" ColumnName="SpfcThoseActingBehalfLang" />
+          <ScalarProperty Name="SpfcActsOrOmissionsLang" ColumnName="SpfcActsOrOmissionsLang" />
+          <ScalarProperty Name="CommentsStdLang" ColumnName="CommentsStdLang" />
+          <ScalarProperty Name="UnacceptableStdLang" ColumnName="UnacceptableStdLang" />
+          <ScalarProperty Name="ProdCompOps" ColumnName="ProdCompOps" />
+          <ScalarProperty Name="PremAndOps" ColumnName="PremAndOps" />
+          <ScalarProperty Name="FormHasSchedule" ColumnName="FormHasSchedule" />
+          <ScalarProperty Name="LimitsLessLang" ColumnName="LimitsLessLang" />
+          <ScalarProperty Name="PrivityOfContractReqd" ColumnName="PrivityOfContractReqd" />
+          <ScalarProperty Name="PIandAI" ColumnName="PIandAI" />
+          <ScalarProperty Name="BIandPD" ColumnName="BIandPD" />
+          <ScalarProperty Name="FormTitle" ColumnName="FormTitle" />
+          <ScalarProperty Name="WhoIsFormDesignedFor" ColumnName="WhoIsFormDesignedFor" />
+          <ScalarProperty Name="FormIsUnacceptable" ColumnName="FormIsUnacceptable" />
+          <ScalarProperty Name="FormEditionDate" ColumnName="FormEditionDate" />
+          <ScalarProperty Name="FormNumber" ColumnName="FormNumber" />
+          <ScalarProperty Name="PolicyType" ColumnName="PolicyType" />
+          <ScalarProperty Name="Insurer" ColumnName="Insurer" />
+          <ScalarProperty Name="AIMatrixElementID" ColumnName="AIMatrixElementID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

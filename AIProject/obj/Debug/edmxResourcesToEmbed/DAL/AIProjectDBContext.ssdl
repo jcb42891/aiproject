@@ -1,5 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="AIProjectDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AIMatrix">
+    <Key>
+      <PropertyRef Name="AIMatrixElementID" />
+    </Key>
+    <Property Name="AIMatrixElementID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Insurer" Type="nvarchar" MaxLength="100" />
+    <Property Name="PolicyType" Type="nvarchar" MaxLength="10" />
+    <Property Name="FormNumber" Type="nvarchar" MaxLength="20" />
+    <Property Name="FormEditionDate" Type="nvarchar" MaxLength="25" />
+    <Property Name="FormIsUnacceptable" Type="bit" />
+    <Property Name="WhoIsFormDesignedFor" Type="nvarchar" MaxLength="100" />
+    <Property Name="FormTitle" Type="nvarchar" MaxLength="200" />
+    <Property Name="BIandPD" Type="bit" />
+    <Property Name="PIandAI" Type="bit" />
+    <Property Name="PrivityOfContractReqd" Type="bit" />
+    <Property Name="LimitsLessLang" Type="bit" />
+    <Property Name="FormHasSchedule" Type="bit" />
+    <Property Name="PremAndOps" Type="bit" />
+    <Property Name="ProdCompOps" Type="bit" />
+    <Property Name="UnacceptableStdLang" Type="nvarchar(max)" />
+    <Property Name="CommentsStdLang" Type="nvarchar(max)" />
+    <Property Name="SpfcActsOrOmissionsLang" Type="bit" />
+    <Property Name="SpfcThoseActingBehalfLang" Type="bit" />
+    <Property Name="RequiresContractExec" Type="bit" />
+    <Property Name="SpfcOnlyCoversWorkSubjContractLang" Type="bit" />
+    <Property Name="SpfcAIRequiredLang" Type="bit" />
+    <Property Name="SpfcNoDutyToDefendLang" Type="bit" />
+    <Property Name="UnacceptableAdvLang" Type="nvarchar(max)" />
+    <Property Name="CommentsAdvLang" Type="nvarchar(max)" />
+    <Property Name="PrimaryLang" Type="bit" />
+    <Property Name="NonContributoryLang" Type="bit" />
+    <Property Name="WaiverOfSubroLang" Type="bit" />
+    <Property Name="AgentUnacceptableLang" Type="nvarchar(max)" />
+  </EntityType>
   <EntityType Name="RequirementQuestion">
     <Key>
       <PropertyRef Name="RequirementQuestionID" />
@@ -52,6 +86,7 @@
     <Parameter Name="a_Password" Type="nvarchar" Mode="In" />
   </Function>
   <EntityContainer Name="AIProjectDBModelStoreContainer">
+    <EntitySet Name="AIMatrix" EntityType="Self.AIMatrix" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RequirementQuestion" EntityType="Self.RequirementQuestion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SystemUser" EntityType="Self.SystemUser" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SystemUserRequirementQuestion" EntityType="Self.SystemUserRequirementQuestion" Schema="dbo" store:Type="Tables" />

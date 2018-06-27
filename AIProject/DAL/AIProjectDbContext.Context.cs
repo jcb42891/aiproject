@@ -29,6 +29,7 @@ namespace AIProject.DAL
     
         public virtual DbSet<RequirementQuestion> RequirementQuestion { get; set; }
         public virtual DbSet<SystemUser> SystemUser { get; set; }
+        public virtual DbSet<AIMatrix> AIMatrix { get; set; }
     
         public virtual ObjectResult<SystemUser> SystemUserCheckLogin(string a_Username, string a_Password)
         {
@@ -41,6 +42,19 @@ namespace AIProject.DAL
                 new ObjectParameter("a_Password", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SystemUser>("SystemUserCheckLogin", a_UsernameParameter, a_PasswordParameter);
+        }
+    
+        public virtual ObjectResult<SystemUser> SystemUserCheckLogin(string a_Username, string a_Password, MergeOption mergeOption)
+        {
+            var a_UsernameParameter = a_Username != null ?
+                new ObjectParameter("a_Username", a_Username) :
+                new ObjectParameter("a_Username", typeof(string));
+    
+            var a_PasswordParameter = a_Password != null ?
+                new ObjectParameter("a_Password", a_Password) :
+                new ObjectParameter("a_Password", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SystemUser>("SystemUserCheckLogin", mergeOption, a_UsernameParameter, a_PasswordParameter);
         }
     }
 }

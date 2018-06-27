@@ -1,11 +1,33 @@
-﻿@{
+﻿@model AIProject.DAL.SystemUser
+@{
+    /**/
+
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.title = "Login";
 }
 
-
-<h1>Login page</h1>
-Username: <input type="text" /><br />
-Password: <input type="text" /><br />
-
-<a href="#">@Html.ActionLink("Create New Account", "Create", "Login")</a>
+@{
+    if (Model != null)
+    {
+        <p>Welcome @Model.Username!</p>
+    }
+    else
+    {
+        using (Html.BeginForm("Index", "Login", FormMethod.Post))
+        {
+            <h1>Login page</h1>
+            <table>
+                <tr>
+                    <td>Username: </td>
+                    <td>@Html.TextBoxFor(m => m.Username)</td>
+                </tr>
+                <tr>
+                    <td>Password: </td>
+                    <td>@Html.PasswordFor(m => m.Password)</td>
+                </tr>
+            </table>
+            <input class="" btn btn-primary btn-success" type="submit" value="Login" />
+            <a href="#">@Html.ActionLink("Create New Account", "Create", "Login")</a>
+        }
+    }
+}

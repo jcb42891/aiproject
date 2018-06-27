@@ -12,6 +12,8 @@ namespace AIProject.DAL
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class AIProjectDBEntities : DbContext
     {
@@ -25,7 +27,20 @@ namespace AIProject.DAL
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<RequirementQuestion> RequirementQuestions { get; set; }
-        public virtual DbSet<SystemUser> SystemUsers { get; set; }
+        public virtual DbSet<RequirementQuestion> RequirementQuestion { get; set; }
+        public virtual DbSet<SystemUser> SystemUser { get; set; }
+    
+        public virtual ObjectResult<SystemUser> SystemUserCheckLogin(string a_Username, string a_Password)
+        {
+            var a_UsernameParameter = a_Username != null ?
+                new ObjectParameter("a_Username", a_Username) :
+                new ObjectParameter("a_Username", typeof(string));
+    
+            var a_PasswordParameter = a_Password != null ?
+                new ObjectParameter("a_Password", a_Password) :
+                new ObjectParameter("a_Password", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SystemUser>("SystemUserCheckLogin", a_UsernameParameter, a_PasswordParameter);
+        }
     }
 }

@@ -5,9 +5,9 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="7f1e7d74ec7f4aa4a850c5d08a83022e" Name="Diagram1">
-        <EntityTypeShape EntityType="AIProjectDBModel.RequirementQuestion" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="AIProjectDBModel.SystemUser" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
-        <AssociationConnector Association="AIProjectDBModel.SystemUserRequirementQuestion" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="AIProjectDBModel.RequirementQuestion" Width="1.5" PointX="0.75" PointY="1" />
+        <EntityTypeShape EntityType="AIProjectDBModel.SystemUser" Width="1.5" PointX="3" PointY="0.875" />
+        <AssociationConnector Association="AIProjectDBModel.SystemUserRequirementQuestion" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

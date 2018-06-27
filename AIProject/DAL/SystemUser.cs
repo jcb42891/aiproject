@@ -17,7 +17,7 @@ namespace AIProject.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SystemUser()
         {
-            this.RequirementQuestions = new HashSet<RequirementQuestion>();
+            this.RequirementQuestion = new HashSet<RequirementQuestion>();
         }
     
         public int SystemUserID { get; set; }
@@ -25,6 +25,6 @@ namespace AIProject.DAL
         public string Password { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RequirementQuestion> RequirementQuestions { get; set; }
+        public virtual ICollection<RequirementQuestion> RequirementQuestion { get; set; }
     }
 }

@@ -15,15 +15,13 @@
     <Property Name="Username" Type="nvarchar" MaxLength="50" />
     <Property Name="Password" Type="nvarchar" MaxLength="50" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'AIProjectDB.dbo.SystemUserRequirementQuestion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="SystemUserRequirementQuestion">
     <Key>
-      <PropertyRef Name="SystemUserID" />
-      <PropertyRef Name="RequirementQuestionID" />
+      <PropertyRef Name="RequirementQuestions_RequirementQuestionID" />
+      <PropertyRef Name="SystemUsers_SystemUserID" />
     </Key>
-    <Property Name="SystemUserID" Type="int" Nullable="false" />
-    <Property Name="RequirementQuestionID" Type="int" Nullable="false" />
+    <Property Name="RequirementQuestions_RequirementQuestionID" Type="int" Nullable="false" />
+    <Property Name="SystemUsers_SystemUserID" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="FK_SystemUserRequirementQuestion_RequirementQuestion">
     <End Role="RequirementQuestion" Type="Self.RequirementQuestion" Multiplicity="1" />
@@ -33,7 +31,7 @@ warning 6002: The table/view 'AIProjectDB.dbo.SystemUserRequirementQuestion' doe
         <PropertyRef Name="RequirementQuestionID" />
       </Principal>
       <Dependent Role="SystemUserRequirementQuestion">
-        <PropertyRef Name="RequirementQuestionID" />
+        <PropertyRef Name="RequirementQuestions_RequirementQuestionID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -45,19 +43,18 @@ warning 6002: The table/view 'AIProjectDB.dbo.SystemUserRequirementQuestion' doe
         <PropertyRef Name="SystemUserID" />
       </Principal>
       <Dependent Role="SystemUserRequirementQuestion">
-        <PropertyRef Name="SystemUserID" />
+        <PropertyRef Name="SystemUsers_SystemUserID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="SystemUser_CheckLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="a_Username" Type="nvarchar" Mode="In" />
+    <Parameter Name="a_Password" Type="nvarchar" Mode="In" />
+  </Function>
   <EntityContainer Name="AIProjectDBModelStoreContainer">
     <EntitySet Name="RequirementQuestion" EntityType="Self.RequirementQuestion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SystemUser" EntityType="Self.SystemUser" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="SystemUserRequirementQuestion" EntityType="Self.SystemUserRequirementQuestion" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [SystemUserRequirementQuestion].[SystemUserID] AS [SystemUserID], 
-    [SystemUserRequirementQuestion].[RequirementQuestionID] AS [RequirementQuestionID]
-    FROM [dbo].[SystemUserRequirementQuestion] AS [SystemUserRequirementQuestion]</DefiningQuery>
-    </EntitySet>
+    <EntitySet Name="SystemUserRequirementQuestion" EntityType="Self.SystemUserRequirementQuestion" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK_SystemUserRequirementQuestion_RequirementQuestion" Association="Self.FK_SystemUserRequirementQuestion_RequirementQuestion">
       <End Role="RequirementQuestion" EntitySet="RequirementQuestion" />
       <End Role="SystemUserRequirementQuestion" EntitySet="SystemUserRequirementQuestion" />

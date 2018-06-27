@@ -1,30 +1,40 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="AIProjectDBModelStoreContainer" CdmEntityContainer="Entities">
-    <EntitySetMapping Name="RequirementQuestions">
+    <EntitySetMapping Name="RequirementQuestion">
       <EntityTypeMapping TypeName="AIProjectDBModel.RequirementQuestion">
         <MappingFragment StoreEntitySet="RequirementQuestion">
-          <ScalarProperty Name="RequirementQuestionID" ColumnName="RequirementQuestionID" />
           <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="RequirementQuestionID" ColumnName="RequirementQuestionID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="SystemUsers">
+    <EntitySetMapping Name="SystemUser">
       <EntityTypeMapping TypeName="AIProjectDBModel.SystemUser">
         <MappingFragment StoreEntitySet="SystemUser">
-          <ScalarProperty Name="SystemUserID" ColumnName="SystemUserID" />
-          <ScalarProperty Name="Username" ColumnName="Username" />
           <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="SystemUserID" ColumnName="SystemUserID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <AssociationSetMapping Name="SystemUserRequirementQuestion" TypeName="AIProjectDBModel.SystemUserRequirementQuestion" StoreEntitySet="SystemUserRequirementQuestion">
-      <EndProperty Name="RequirementQuestion">
-        <ScalarProperty Name="RequirementQuestionID" ColumnName="RequirementQuestionID" />
-      </EndProperty>
       <EndProperty Name="SystemUser">
-        <ScalarProperty Name="SystemUserID" ColumnName="SystemUserID" />
+        <ScalarProperty Name="SystemUserID" ColumnName="SystemUsers_SystemUserID" />
+      </EndProperty>
+      <EndProperty Name="RequirementQuestion">
+        <ScalarProperty Name="RequirementQuestionID" ColumnName="RequirementQuestions_RequirementQuestionID" />
       </EndProperty>
     </AssociationSetMapping>
+    <FunctionImportMapping FunctionImportName="SystemUser_CheckLogin" FunctionName="AIProjectDBModel.Store.SystemUser_CheckLogin">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="AIProjectDBModel.SystemUser_CheckLogin_Result">
+          <ScalarProperty Name="SystemUserID" ColumnName="SystemUserID" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SystemUserCheckLogin" FunctionName="AIProjectDBModel.Store.SystemUser_CheckLogin" />
   </EntityContainerMapping>
 </Mapping>

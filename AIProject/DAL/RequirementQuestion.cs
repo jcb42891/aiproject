@@ -17,13 +17,13 @@ namespace AIProject.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public RequirementQuestion()
         {
-            this.SystemUsers = new HashSet<SystemUser>();
+            this.SystemUser = new HashSet<SystemUser>();
         }
     
         public int RequirementQuestionID { get; set; }
         public string Content { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SystemUser> SystemUsers { get; set; }
+        public virtual ICollection<SystemUser> SystemUser { get; set; }
     }
 }

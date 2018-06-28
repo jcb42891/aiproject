@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "AI Matrix Import";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AI Matrix Import</h2>
+
+@using (Html.BeginForm("Index", "MatrixImport", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <label for= "file" > AI Matrix Filename:</label >
+    <input type = "file" name = "aiMatrixFU" id = "aiMatrixFU" />
+    <input type = "submit" />
+
+}
